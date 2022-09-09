@@ -1,25 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import BottomNavigation from "@mui/material/BottomNavigation";
 
-function App() {
+import { Routes, Route, Link, NavLink } from "react-router-dom";
+import HomePage from "./pages/HomePage/HomePage";
+import TeamPage from "./pages/TeamPage/TeamPage";
+
+export default function App() {
+  let activeStyle = {
+    textDecoration: "underline",
+    color: "red",
+  };
+
+  let activeClassName = "underline";
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div className="card-container">
+      <h1>Welcome to React Router!</h1>
+      <BottomNavigation showLabels>
+        <NavLink
+          className={({ isActive }) => (isActive ? activeClassName : undefined)}
+          to="/"
+          style={({ isActive }) => (isActive ? activeStyle : undefined)}
         >
-          Learn React
-        </a>
-      </header>
+          <h4>Home </h4>
+        </NavLink>
+        <NavLink
+          to="/about"
+          style={({ isActive }) => (isActive ? activeStyle : undefined)}
+        >
+          <h4>About </h4>
+        </NavLink>
+        <NavLink
+          to="/team"
+          style={({ isActive }) => (isActive ? activeStyle : undefined)}
+        >
+          <h4>Team </h4>
+        </NavLink>
+      </BottomNavigation>
+
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="about" element={<h1>ABOUT PAGE</h1>} />
+        <Route path="team" element={<TeamPage />} />
+      </Routes>
     </div>
   );
 }
-
-export default App;
