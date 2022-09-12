@@ -1,11 +1,9 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
+
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
+
+import { useLocation, useNavigate } from "react-router-dom";
 
 const steps = [
   "Select campaign settings",
@@ -14,12 +12,25 @@ const steps = [
 ];
 
 export default function HomePage() {
+  const [name] = React.useState("John");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  console.log(location);
 
   return (
     <Box sx={{ width: "100%" }}>
       HOME
-      <Button variant="contained" onClick={() => navigate("/team")}>
+      <Button
+        variant="contained"
+        onClick={() =>
+          navigate("/news", {
+            state: {
+              name,
+            },
+          })
+        }
+      >
         Go to Team
       </Button>
     </Box>
