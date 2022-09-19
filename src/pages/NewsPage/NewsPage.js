@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { UserContext } from "../../App";
 const bull = (
   <Box
     component="span"
@@ -17,6 +18,8 @@ const bull = (
 );
 
 export default function TeamPage() {
+  const { user } = React.useContext(UserContext);
+
   const [todos, setTodos] = React.useState([]);
   const navigate = useNavigate();
 
@@ -28,8 +31,11 @@ export default function TeamPage() {
   };
 
   React.useEffect(() => {
-    getNews();
-  }, []);
+    user.name !== "" && getNews();
+    console.log("pali");
+  }, [user.name]);
+
+  if (user.name === "") return <h1>Farise prati cas</h1>;
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
       {todos.map((el, index) => (

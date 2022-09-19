@@ -1,38 +1,38 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-
-import Button from "@mui/material/Button";
-
-import { useLocation, useNavigate } from "react-router-dom";
-
-const steps = [
-  "Select campaign settings",
-  "Create an ad group",
-  "Create an ad",
-];
+import { Button } from "@mui/material";
+import { UserContext } from "../../App";
 
 export default function HomePage() {
-  const [name] = React.useState("John");
-  const navigate = useNavigate();
-  const location = useLocation();
+  const { user, setUser } = React.useContext(UserContext);
 
-  console.log(location);
+  const ulogujUsera = () => {
+    setUser({
+      ...user,
+      name: "John",
+      email: "john@doe.com",
+      address: "Prvomajska",
+    });
+  };
+
+  const izlogujUsera = () => {
+    setUser({
+      name: "",
+      email: "",
+      address: "",
+    });
+  };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      HOME
+    <Box sx={{ margin: "0 auto" }}>
       <Button
         variant="contained"
-        onClick={() =>
-          navigate("/news", {
-            state: {
-              name,
-            },
-          })
-        }
+        onClick={() => (user.name === "" ? ulogujUsera() : izlogujUsera())}
       >
-        Go to Team
+        {user.name === "" ? "Log in" : "Log out"}
       </Button>
+
+      {user.name === "" ? <h1>Niste ulogovani</h1> : <h1>Ulogvani ste</h1>}
     </Box>
   );
 }
